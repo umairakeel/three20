@@ -54,6 +54,23 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSError*)request:(TTURLRequest*)request processResponse:(NSHTTPURLResponse*)response
                data:(id)data {
+  
+  // Check the response content-type, don't attempt to parse if its not application/json utf8
+  if ([[[response allHeaderFields] objectForKey:@"Content-Type"] 
+       isEqualToString:@"application/json; charset=utf-8"] == NO) {
+  #ifdef DEBUG
+    NSString* error = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    TTDINFO(@"error: %@", error);
+    [error release];
+  #endif
+    
+    return [NSError errorWithDomain:@"com.facebook.three20" 
+                               code:-1 
+                           userInfo:[NSDictionary dictionaryWithObject:
+                                     NSLocalizedString(@"Response is not application/json",@"") 
+                                                                forKey:NSLocalizedDescriptionKey]];
+  }
+  
   // This response is designed for NSData objects, so if we get anything else it's probably a
   // mistake.
   TTDASSERT([data isKindOfClass:[NSData class]]);
