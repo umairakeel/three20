@@ -464,6 +464,14 @@ static const CGFloat kUITextViewVerticalPadding = 6;
   _textField.textColor = textColor;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////	
+- (UIView *)textView {
+  if (_textField.hidden == NO) 
+    return [[_textField retain] autorelease];
+  else if (_textView.hidden == NO) 
+    return [[_textView retain] autorelease];
+  return nil;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollContainerToCursor:(UIScrollView*)scrollView {

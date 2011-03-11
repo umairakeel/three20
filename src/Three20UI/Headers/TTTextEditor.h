@@ -49,6 +49,8 @@
 @property (nonatomic)           BOOL autoresizesToText;
 @property (nonatomic)           BOOL showsExtraLine;
 
+@property (nonatomic, readonly) UIView *textView;
+
 @property (nonatomic, assign) id<TTTextEditorDelegate> delegate;
 
 - (void)scrollContainerToCursor:(UIScrollView*)scrollView;
